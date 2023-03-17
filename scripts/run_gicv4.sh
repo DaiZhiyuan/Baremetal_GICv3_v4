@@ -27,4 +27,4 @@ FVP_Base_RevC-2xAEMvA \
    -C gic_distributor.extended-spi-count=32 \
    -C semihosting-enable=1 \
    -C pctl.startup=0.0.*.0 \
-   --application=$(dirname $1)/$1
+   --application=$1

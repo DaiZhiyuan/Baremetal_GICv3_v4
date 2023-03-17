@@ -17,4 +17,4 @@ FVP_Base_RevC-2xAEMvA \
     -C gic_distributor.GITS_BASER6-type=0 \
     -C gic_distributor.extended-ppi-count=32 \
     -C gic_distributor.extended-spi-count=32 \
-    --application=$(dirname $1)/$1
+    --application=$1
