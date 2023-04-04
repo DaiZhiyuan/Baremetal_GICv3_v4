@@ -41,17 +41,31 @@ endif
 all: image_basic.axf image_lpi.axf image_gicv31.axf
 	$(call DONE,$(EXECUTABLE))
 
+CSCOPE = cscope
+TAGS = ctags
+
 gicv4: image_vlpi.axf image_vsgi.axf
 
 rebuild: clean all
 
 clean:
 	$(call RM,*.o)
+	$(call RM,cscope*)
+	$(call RM,tags)
 	$(call RM,image_basic.axf)
 	$(call RM,image_lpi.axf)
 	$(call RM,image_gicv31.axf)
 	$(call RM,image_vlpi.axf)
 	$(call RM,image_vsgi.axf)
+
+cscope:
+	@find . -name '*.[hcsS]' -print > cscope.files
+	@cscope -bkqu
+.PHONY:cscope
+
+tags:
+	@find . -name '*.[hcsS]' -print | xargs $(TAGS) -a
+.PHONY:tags
 
 main_basic.o: ./src/main_basic.c
 	$(CC) ${CFLAGS} ./src/main_basic.c
