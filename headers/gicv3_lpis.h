@@ -155,6 +155,8 @@ uint32_t setITSTableAddr(uint32_t index, uint64_t addr, uint64_t attributes, uin
 
 uint32_t getITSPTA(void);
 
+uint32_t getITSNID(void);
+
 
 // Sets the GITS_CTLR.Enabled bit
 void enableITS(void);

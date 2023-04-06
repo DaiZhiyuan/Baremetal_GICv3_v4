@@ -280,6 +280,13 @@ uint32_t checkGICModel(void)
      printf("checkGICModel(): GITS_TYPER.PTA==1, this example expects PTA==0\n");
      return 1;
   }
+
+   //
+   // Check Individual doorbell interrupt^M
+   //
+#ifdef DEBUG
+      printf("feature check: Individual doorbell interrupt %s\n", getNID() ? "not supported.":"supported.");
+#endif
   
   //
   // Check the GITS_BASER<n> types

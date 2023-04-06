@@ -371,6 +371,14 @@ uint32_t getITSPTA(void)
   return ((gic_its->GITS_TYPER >> 19) & 1);
 }
 
+
+// ------------------------------------------------------------
+// Returns the value of GITS_TYPER.nID bit
+uint32_t getITSNID(void)
+{
+  return ((gic_its->GITS_TYPER >> 43) & 0x1);
+}
+
 // ------------------------------------------------------------
 
 // Sets the GITS_CTLR.Enabled bit
