@@ -150,8 +150,8 @@ primary:
   .global getAffinity
 getAffinity:
   MRS      x0, MPIDR_EL1
-  UBFX     x1, x0, #32, #8
-  BFI      w0, w1, #24, #8
+  UBFX     x1, x0, #32, #8      // rd, rn, #p, #n ==> x1 = x0[39:31]
+  BFI      w0, w1, #24, #8      // rd, rn, #p, #n ==> w0[31:24] = w1[7:0]
   RET
   .cfi_endproc
 
