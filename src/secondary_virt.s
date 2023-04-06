@@ -114,13 +114,13 @@ secondary:
   //
   MOV      x0, #RDbase
   MOV      x1, #GICR_WAKERoffset
-  ADD      x1, x1, x0
-  STR      wzr, [x1]
-  DSB      SY
+  ADD      x1, x1, x0       // rd, rn, op2 ==> rd = rn + op2
+  STR      wzr, [x1]        // rt, [addr]  ==> [addr]N = rt 
+  DSB      SY               // Data Synchronization Barrier (Full system)
 wait:                       // We now have to wait for ChildrenAsleep to read 0
-  LDR      w0, [x1]
-  AND      w0, w0, #0x6
-  CBNZ     w0, wait
+  LDR      w0, [x1]         // rt, [addr]  ==> rt = [addr]
+  AND      w0, w0, #0x6     // rd, rn, op2 ==> rd = rn & op2
+  CBNZ     w0, wait         // rn, rel     ==> if(rn != 0) goto rel
 
 
   //
@@ -180,9 +180,9 @@ wait:                       // We now have to wait for ChildrenAsleep to read 0
   MOV      x11, xzr
 
   LDR      x0, =el1_entry_aarch64
-  MSR      ELR_EL3, x0
+  MSR      ELR_EL3, x0           // When taking an exception to EL3, holds the address to return to.
 
-  MOV      x0, #AArch64_EL1_SP1
+  MOV      x0, #AArch64_EL1_SP1  // 0x05(0b0101) EL1h. Holds the saved process state when an exception is taken to EL3.
   MSR      spsr_el3, x0
   ERET
 
