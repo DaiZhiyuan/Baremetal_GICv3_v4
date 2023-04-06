@@ -18,6 +18,7 @@
 
 #include <stdint.h>
 
+// refs: <Arm IHI 0069G> Table 12-25 Distributor register map
 struct GICv3_dist_if
 {
         volatile uint32_t GICD_CTLR;              // +0x0000 - RW - Distributor Control Register
@@ -97,6 +98,8 @@ struct GICv3_dist_if
         volatile uint64_t GICD_ROUTERE[1024];     // +0x8000 - RW - Controls SPI routing when ARE=1 (GICv3.1)
 };
 
+
+// refs: <Arm IHI 0069G> Table 12-27 GIC physical LPI Redistributor register map
 struct GICv3_rdist_lpis_if
 {
         volatile uint32_t GICR_CTLR;             // +0x0000 - RW - Redistributor Control Register
@@ -128,6 +131,7 @@ struct GICv3_rdist_lpis_if
   const volatile uint32_t padding10[2];          // +0x0118 - RESERVED
 };
 
+// refs: <Arm IHI 0069G> Table 12-29 GIC SGI and PPI Redistributor register map
 struct GICv3_rdist_sgis_if
 {
   const volatile uint32_t padding1[32];          // +0x0000 - RESERVED
@@ -167,6 +171,13 @@ struct GICv3_rdist_res_if
   const volatile uint32_t padding1[32];          // +0x0000 - RESERVED
 };
 
+// refs: <Arm IHI 0069G> 12.10 The GIC Redistributor register map
+// The frames for each Redistributor must be contiguous and must be 
+// ordered as follows:
+//  1. RD_base
+//  2. SGI_base
+//  3. VLPI_base
+//  4. Reserved
 struct GICv3_rdist_if
 {
   struct GICv3_rdist_lpis_if   lpis  __attribute__((aligned (0x10000)));
@@ -179,7 +190,7 @@ struct GICv3_rdist_if
 };
 
 
-// +0 from ITS_BASE
+// refs: <Arm IHI 0069G> Table 12-33 ITS control register map
 struct GICv3_its_ctlr_if
 {
         volatile uint32_t GITS_CTLR;             // +0x0000 - RW - ITS Control Register
@@ -199,14 +210,14 @@ struct GICv3_its_ctlr_if
         volatile uint64_t GITS_BASER[8];         // +0x0100 - RW - Sets base address of Device and Collection tables
 };
 
-// +0x010000 from ITS_BASE
+// refs: <Arm IHI 0069G> Table 12-34 ITS translation register map
 struct GICv3_its_int_if
 {
   const volatile uint32_t padding1[16];          // +0x0000 - RESERVED
         volatile uint32_t GITS_TRANSLATER;       // +0x0040 - RW - Written by peripherals to generate LPI
 };
 
-// +0x020000 from ITS_BASE
+// refs: <Arm IHI 0069G> Table 12-35 Virtual SGI register map
 struct GICv3_its_sgi_if
 {
   const volatile uint32_t padding1[8];           // +0x0000 - RESERVED
