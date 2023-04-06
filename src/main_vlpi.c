@@ -24,6 +24,8 @@ volatile unsigned int flag;
 
 // --------------------------------------------------------
 // These locations are based on the memory map of the Base Platform model
+// refs: Fast Models Version 11.20 Reference Guide 
+//     Table 8-6: Base Platform memory map.
 
 #define CONFIG_TABLE      (0x80020000)
 #define PENDING0_TABLE    (0x80030000)
@@ -69,8 +71,10 @@ int main(void)
 
   //
   // Set up Redistributor structures used for LPIs
-  //
-
+  // LPI configuration is global.
+  // Each Redistributor maintains entries in a separate LPI Pending table.
+  //    InnerCache & OuterCache : Device-nGnRnE
+  //    shareability : Non-shareable
   setLPIConfigTableAddr(rd0, CONFIG_TABLE, GICV3_LPI_DEVICE_nGnRnE /*Attributes*/, 15 /* Number of ID bits */);
   setLPIPendingTableAddr(rd0, PENDING0_TABLE, GICV3_LPI_DEVICE_nGnRnE /*Attributes*/, 15 /* Number of ID bits */);
   enableLPIs(rd0);
