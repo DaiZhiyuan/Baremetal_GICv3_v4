@@ -305,14 +305,14 @@ irqFirstLevelHandler:
   //
 
   // Read IAR
-  MRS      x0, ICC_IAR1_EL1     // When read from NS.EL1 with HCR_EL1.IMO==0, this will access ICV_IAR1_EL1
+  MRS      x0, ICC_IAR1_EL1     // When read from NS.EL1 with HCR_EL2.IMO==0, this will access ICV_IAR1_EL1
 
   // Semihosting call(SYS_WRITE0) write a null-terminated string to the debug channel.
   LDR      x1, =irq_msg
   MOV      w0, #0x04
   HLT      #0xf000
 
-  MSR      ICC_EOIR1_EL1, x0    // When read from NS.EL1 with HCR_EL1.IMO==0, this will access ICV_EOIR1_EL1
+  MSR      ICC_EOIR1_EL1, x0    // When read from NS.EL1 with HCR_EL2.IMO==0, this will access ICV_EOIR1_EL1
 
   ADD      x11, x11, #1        // Update flag
   ERET
@@ -324,14 +324,14 @@ fiqFirstLevelHandler:
   //
 
   // Read IAR
-  MRS      x0, ICC_IAR0_EL1     // When read from NS.EL1 with HCR_EL1.FIMO==0, this will access ICV_IAR0_EL1
+  MRS      x0, ICC_IAR0_EL1     // When read from NS.EL1 with HCR_EL2.FMO==0, this will access ICV_IAR0_EL1
 
   // Semihosting call(SYS_WRITE0) write a null-terminated string to the debug channel.
   LDR      x1, =fiq_msg
   MOV      w0, #0x04
   HLT      #0xf000
 
-  MSR      ICC_EOIR0_EL1, x0    // When read from NS.EL1 with HCR_EL1.FMO==0, this will access ICV_EOIR0_EL1
+  MSR      ICC_EOIR0_EL1, x0    // When read from NS.EL1 with HCR_EL2.FMO==0, this will access ICV_EOIR0_EL1
 
   ADD       x11, x11, #1        // Update flag
   ERET
