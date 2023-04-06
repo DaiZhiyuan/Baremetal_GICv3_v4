@@ -289,7 +289,7 @@ uint32_t checkGICModel(void)
    // Check Individual doorbell interrupt^M
    //
 #ifdef DEBUG
-      printf("feature check: Individual doorbell interrupt %s\n", getNID() ? "not supported.":"supported.");
+      printf("feature check: Individual doorbell interrupt %s\n", getITSNID() ? "not supported.":"supported.");
 #endif
   
   //
