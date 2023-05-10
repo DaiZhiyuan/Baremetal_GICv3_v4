@@ -21,6 +21,9 @@ FVP_Base_RevC-2xAEMvA \
     -C gic_distributor.ITS-shared-vPE-table=2 \
     -C gic_distributor.ITS-vmovp-bit=1 \
     -C gic_distributor.has_VPENDBASER-dirty-flag-on-load=1 \
+    -C gic_distributor.extended-ppi-count=0 \
+    -C gic_distributor.extended-spi-count=1024 \
+    -C semihosting-enable=1 \
     -C pctl.startup=0.*.*.0 \
     --stat \
     --application=$1
