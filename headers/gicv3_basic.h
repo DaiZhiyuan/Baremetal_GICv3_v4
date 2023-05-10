@@ -18,6 +18,60 @@
 
 #include <stdint.h>
 
+/* GICD_TYPER field descriptions */
+#define ESPI_range_SHIFT 27
+#define ESPI_range_MASK (0x1f << ESPI_range_SHIFT)
+#define RSS_SHIFT 26
+#define RSS_MASK (0x1 << RSS_SHIFT)
+#define No1N_SHIFT 25
+#define No1N_MASK (0x1 << No1N_SHIFT)
+#define A3V_SHIFT 24
+#define A3V_MASK (0x1 << A3V_SHIFT)
+#define IDbits_SHIFT 19
+#define IDbits_MASK (0x1f << IDbits_SHIFT)
+#define DVIS_SHIFT 19
+#define DVIS_MASK (0x1 << DVIS_SHIFT)
+#define MBIS_SHIFT 16
+#define MBIS_MASK (0x1 << MBIS_SHIFT)
+#define num_LPIs_SHIFT 11
+#define num_LPIs_MASK (0x1f << num_LPIs_SHIFT)
+#define SecurityExtn_SHIFT 10
+#define SecurityExtn_MASK (0x1 << SecurityExtn_SHIFT)
+#define ESPI_SHIFT 8
+#define ESPI_MASK (0x1 << ESPI_SHIFT)
+#define CPUNumber_SHIFT 5
+#define CPUNumber_MASK (0x7 << CPUNumber_SHIFT)
+#define ITLinesNumber_SHIFT 0
+#define ITLinesNumber_MASK (0x1f << ITLinesNumber_SHIFT)
+
+/* GICR_TYPER field descriptions */
+#define PPInum_SHIFT 27
+#define PPInum_MASK (0x1f << PPInum_SHIFT)
+#define VSGI_SHIFT 26
+#define VSGI_MASK (0x1 << VSGI_SHIFT)
+#define CommonLPIAff_SHIFT 24
+#define CommonLPIAff_MASK (0x3 << CommonLPIAff_SHIFT)
+#define Processor_Number_SHIFT 8
+#define Processor_Number_MASK (0xffff << Processor_Number_SHIFT)
+#define RVPEID_SHIFT 7
+#define RVPEID_MASK (0x1 << RVPEID_SHIFT)
+#define MPAM_SHIFT 6
+#define MPAM_MASK (0x1 << MPAM_SHIFT)
+#define DPGS_SHIFT 5
+#define DPGS_MASK (0x1 << DPGS_SHIFT)
+#define Last_SHIFT 4
+#define Last_MASK (0x1 << Last_SHIFT)
+#define DirectLPI_SHIFT 3
+#define DirectLPI_MASK (0x1 << DirectLPI_SHIFT)
+#define Dirty_SHIFT 2
+#define Dirty_MASK (0x1 << Dirty_SHIFT)
+#define VLPIS_SHIFT 1
+#define VLPIS_MASK (0x1 << VLPIS_SHIFT)
+#define PLPIS_SHIFT 0
+#define PLPIS_MASK (0x1 << PLPIS_SHIFT)
+
+#define GET_FIELD(reg,mask,shift)   ((reg & mask ) >> shift)
+
 // ------------------------------------------------------------
 // Address Functions
 // ------------------------------------------------------------
@@ -278,6 +332,8 @@ void sendOtherGroup1SGI(uint32_t INTID, uint64_t mode, uint32_t target_list);
 #define GICV3_SGI_NS_ACCESS_GROUP1    (0x2)
 
 void configNSAccessSGI(uint32_t INTID, unsigned access);
+
+uint32_t getGICDTyper(void);
 
 #endif
 

@@ -941,6 +941,44 @@ uint32_t clearIntPending(uint32_t ID, uint32_t rd)
   return 0;
 }
 
+uint32_t getGICDTyper(void)
+{
+    uint32_t gicd_typer = gic_dist->GICD_TYPER;
+
+    #ifdef DEBUG
+    printf("GICD_TYPER(RAW): 0x%x\n", gicd_typer);
+
+    uint32_t espi_range = GET_FIELD(gicd_typer, ESPI_range_MASK, ESPI_range_SHIFT);
+    printf("\tGICD_TYPER.ESPI_range: 0x%x ==> (%u)\n", espi_range, (espi_range+1)*32);
+
+    printf("\tGICD_TYPER.RSS: 0x%x\n", GET_FIELD(gicd_typer, RSS_MASK, RSS_SHIFT));
+    printf("\tGICD_TYPER.No1N: 0x%x\n", GET_FIELD(gicd_typer, No1N_MASK, No1N_SHIFT));
+    printf("\tGICD_TYPER.A3V: 0x%x\n", GET_FIELD(gicd_typer, A3V_MASK, A3V_SHIFT));
+
+    uint32_t IDbits = GET_FIELD(gicd_typer, IDbits_MASK, IDbits_SHIFT);
+    printf("\tGICD_TYPER.IDbits: 0x%x ==> (%u)\n", IDbits, 1 << (IDbits+1));
+
+    printf("\tGICD_TYPER.DVIS: 0x%x\n", GET_FIELD(gicd_typer, DVIS_MASK, DVIS_SHIFT));
+    printf("\tGICD_TYPER.MBIS: 0x%x\n", GET_FIELD(gicd_typer, MBIS_MASK, MBIS_SHIFT));
+
+    uint32_t num_LPIs = GET_FIELD(gicd_typer, num_LPIs_MASK, num_LPIs_SHIFT);
+    printf("\tGICD_TYPER.num_LPIs: 0x%x ==> (", num_LPIs);
+    if (num_LPIs)
+        printf("%u)\n", 1 << (GET_FIELD(gicd_typer, num_LPIs_MASK, num_LPIs_SHIFT)+1));
+    else
+        printf("%s)\n", "by GICD_TYPER.IDbits");
+
+    printf("\tGICD_TYPER.SecurityExtn: 0x%x\n", GET_FIELD(gicd_typer, SecurityExtn_MASK, SecurityExtn_SHIFT));
+    printf("\tGICD_TYPER.ESPI: 0x%x\n", GET_FIELD(gicd_typer, ESPI_MASK, ESPI_SHIFT));
+    printf("\tGICD_TYPER.CPUNumber: 0x%x\n", GET_FIELD(gicd_typer, CPUNumber_MASK, CPUNumber_SHIFT));
+
+    uint32_t ITLinesNumber = GET_FIELD(gicd_typer, ITLinesNumber_MASK, ITLinesNumber_SHIFT);
+    printf("\tGICD_TYPER.ITLinesNumber: 0x%x ==> (%u)\n", ITLinesNumber, (ITLinesNumber+1)*32-1);
+    #endif
+
+    return gicd_typer;
+}
+
 // ------------------------------------------------------------
 // End of giv3_basic.c
 // ------------------------------------------------------------

@@ -51,7 +51,13 @@ int main(void)
   // Configure the interrupt controller
   //
   rd0 = initGIC();
-  
+
+
+  //
+  // Dump GICD_TYPER information
+  //
+  getGICDTyper();
+ 
   // The example sends the vLPI to 0.0.1.0, so we also need its RD number
   rd1 = getRedistID(0x00000100);
 
