@@ -334,6 +334,7 @@ void sendOtherGroup1SGI(uint32_t INTID, uint64_t mode, uint32_t target_list);
 void configNSAccessSGI(uint32_t INTID, unsigned access);
 
 uint32_t getGICDTyper(void);
+uint64_t getGICRTyper(void);
 
 #endif
 

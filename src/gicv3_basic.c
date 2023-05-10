@@ -979,6 +979,31 @@ uint32_t getGICDTyper(void)
     return gicd_typer;
 }
 
+uint64_t getGICRTyper(void)
+{
+    uint32_t gicr_typer_h = gic_rdist->lpis.GICR_TYPER[1];
+    uint32_t gicr_typer_l = gic_rdist->lpis.GICR_TYPER[0];
+    uint64_t gicr_typer = (gicr_typer_h << 31) | gicr_typer_l;
+
+    #ifdef DEBUG
+    printf("GICR_TYPER(RAW): 0x%lx\n", gicr_typer);
+    printf("\tGICR_TYPER.Affinity_Value: 0x%x\n", gicr_typer_h);
+    printf("\tGICR_TYPER.PPInum: 0x%x\n", GET_FIELD(gicr_typer_l, PPInum_MASK, PPInum_SHIFT));
+    printf("\tGICR_TYPER.VSGI: 0x%x\n", GET_FIELD(gicr_typer_l, VSGI_MASK, VSGI_SHIFT));
+    printf("\tGICR_TYPER.CommonLPIAff: 0x%x\n", GET_FIELD(gicr_typer_l, CommonLPIAff_MASK, CommonLPIAff_SHIFT));
+    printf("\tGICR_TYPER.Processor_Number: 0x%x\n", GET_FIELD(gicr_typer_l, Processor_Number_MASK, Processor_Number_SHIFT));
+    printf("\tGICR_TYPER.RVPEID: 0x%x\n", GET_FIELD(gicr_typer_l, RVPEID_MASK, RVPEID_SHIFT));
+    printf("\tGICR_TYPER.MPAM: 0x%x\n", GET_FIELD(gicr_typer_l, MPAM_MASK, MPAM_SHIFT));
+    printf("\tGICR_TYPER.DPGS: 0x%x\n", GET_FIELD(gicr_typer_l, DPGS_MASK, DPGS_SHIFT));
+    printf("\tGICR_TYPER.Last: 0x%x\n", GET_FIELD(gicr_typer_l, Last_MASK, Last_SHIFT));
+    printf("\tGICR_TYPER.DirectLPI: 0x%x\n", GET_FIELD(gicr_typer_l, DirectLPI_MASK, DirectLPI_SHIFT));
+    printf("\tGICR_TYPER.VLPIS: 0x%x\n", GET_FIELD(gicr_typer_l, VLPIS_MASK, VLPIS_SHIFT));
+    printf("\tGICR_TYPER.PLPIS: 0x%x\n", GET_FIELD(gicr_typer_l, PLPIS_MASK, PLPIS_SHIFT));
+    #endif
+
+    return gicr_typer;
+}
+
 // ------------------------------------------------------------
 // End of giv3_basic.c
 // ------------------------------------------------------------
