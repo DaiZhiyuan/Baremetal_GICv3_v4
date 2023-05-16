@@ -997,6 +997,7 @@ uint64_t getGICRTyper(void)
     printf("\tGICR_TYPER.DPGS: 0x%x\n", GET_FIELD(gicr_typer_l, DPGS_MASK, DPGS_SHIFT));
     printf("\tGICR_TYPER.Last: 0x%x\n", GET_FIELD(gicr_typer_l, Last_MASK, Last_SHIFT));
     printf("\tGICR_TYPER.DirectLPI: 0x%x\n", GET_FIELD(gicr_typer_l, DirectLPI_MASK, DirectLPI_SHIFT));
+    printf("\tGICR_TYPER.Dirty: 0x%x\n", GET_FIELD(gicr_typer_l, Dirty_MASK, Dirty_SHIFT));
     printf("\tGICR_TYPER.VLPIS: 0x%x\n", GET_FIELD(gicr_typer_l, VLPIS_MASK, VLPIS_SHIFT));
     printf("\tGICR_TYPER.PLPIS: 0x%x\n", GET_FIELD(gicr_typer_l, PLPIS_MASK, PLPIS_SHIFT));
     #endif
