@@ -130,6 +130,21 @@ fiqFirstLevelHandler:
   ERET
 
 // ------------------------------------------------------------
+// Minimal C runtime init/fini hooks required by newlib
+// ------------------------------------------------------------
+
+  .section .text
+  .global _init
+  .type _init, %function
+_init:
+  RET
+
+  .global _fini
+  .type _fini, %function
+_fini:
+  RET
+
+// ------------------------------------------------------------
 // End of file
 // ------------------------------------------------------------
 

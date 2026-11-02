@@ -96,7 +96,7 @@
 // ------------------------------------------------------------
 
   .global secondary
-  .type secondary, @function
+  .type secondary, %function
 secondary:
 
   //

@@ -26,8 +26,10 @@ from, out of or in connection with the Software or the use of Software.
 
 Requirements
 ============
-* Arm Development Studio Gold edition (GICv3.0)
-* Arm Development Studio Platinum edition (GICv3.1 and GICv4.1)
+* Arm GNU Toolchain for AArch64 bare-metal targets (aarch64-none-elf), including newlib and rdimon
+* Arm Fast Models FVP_Base_RevC-2xAEMvA
+* GICv3.1 features require a model configuration with extended interrupt ranges
+* GICv4.1 features require a model configuration with GICv4.1 support
 
 
 File list
@@ -52,10 +54,11 @@ File list
   |   |-> main_lpi.c         Example showing usage of physical LPIs.
   |   |-> main_vlpi.c        Example showing usage of GICv4.1 virtual LPIs.
   |   |-> main_vsgi.c        Example showing usage of GICv4.1 virtual SGIs.
+  |   |-> runtime.c          GNU C runtime init and semihosting printf.
   |   |-> secondary_virt.s   Boot code for secondary core, used by the GICv4.1 example.
   |   |-> startup.s          Minimal reset handler.
   |   |-> startup_virt.s     Minimal reset handler, used by the GICv4.1 example.
-  |   |-> system_counter.s   Helper functions for System Counter
+  |   |-> system_counter.c   Helper functions for System Counter
   |
   |-> scripts
   |   |-> run_gicv3.sh       Helper scripts for runing FVP
@@ -70,7 +73,8 @@ File list
   |
   |-> Makefile
   |-> ReadMe.txt             This file
-  |-> scatter.txt            Memory layout for linker
+  |-> linker.ld              GNU linker script for GICv3 examples
+  |-> linker_virt.ld         GNU linker script for GICv4.1 examples
 
 
 Description
@@ -104,8 +108,13 @@ This example shows the setup and use of GICv4.1 virtual SGIs.
 
 Building the example from the command line
 ==========================================
-To build the example:
-- Open a DS-5 or Arm Developer Studio command prompt, then navigate to the location of the example
+The Makefile uses the Arm GNU Toolchain for AArch64 bare-metal targets. By default it
+expects the toolchain at:
+
+    /usr/local/src/arm-gnu-toolchain-13.3.rel1-x86_64-aarch64-none-elf/bin
+
+Override this location with TOOLCHAIN=<path-to-bin>, or override CROSS with the
+compiler prefix directly.
 
 The make command depends on the version of the GIC architecture implemented.
 
@@ -116,6 +125,8 @@ For GICv4.1:
     - Run "make GIC=GICV4"       to build PPI, SPI, and physical LPI examples.
     - Run "make GIC=GICV4 gicv4" to build vLPI and vSGI examples.
 
+Run "make clean" when switching between GIC versions or DEBUG settings, because the
+object files are shared between all images.
 
 Optionally, adding "DEBUG=TRUE" results in additional logging messages being printed.
 

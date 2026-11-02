@@ -3,14 +3,19 @@
 # Copyright (C) ARM Limited, 2013. All rights reserved.
 #
 # This makefile is intended for use with GNU make
-# This example is intended to be built with ARM Compiler 6
+# This example is intended to be built with the Arm GNU Toolchain for AArch64
 
-ASFLAGS= -gdwarf-3 -c --target=aarch64-arm-none-eabi
-CFLAGS=  -gdwarf-3 -c --target=aarch64-arm-none-eabi -I"./headers" -O1
+TOOLCHAIN ?= /usr/local/src/arm-gnu-toolchain-13.3.rel1-x86_64-aarch64-none-elf/bin
+CROSS ?= $(TOOLCHAIN)/aarch64-none-elf-
 
-CC=armclang
-AS=armclang
-LD=armlink
+ARCHFLAGS= -march=armv8-a -mstrict-align -mgeneral-regs-only
+ASFLAGS= -gdwarf-3 -c $(ARCHFLAGS)
+CFLAGS=  -gdwarf-3 -c $(ARCHFLAGS) -I"./headers" -O1 -ffreestanding -fno-pie -fno-pic -fno-stack-protector
+LDFLAGS= -nostartfiles --specs=rdimon.specs -Wl,--build-id=none -Wl,--entry=start64 -Wl,--no-warn-rwx-segments
+
+CC= $(CROSS)gcc
+AS= $(CROSS)gcc
+LD= $(CROSS)gcc
 
 GIC?=	GICV3
 
@@ -97,6 +102,9 @@ system_counter.o: ./src/system_counter.c
 sp804_timer.o: ./src/sp804_timer.c
 	$(CC) ${CFLAGS} ./src/sp804_timer.c
 
+runtime.o: ./src/runtime.c
+	$(CC) ${CFLAGS} ./src/runtime.c
+
 startup.o: ./src/startup.s
 	$(AS) ${ASFLAGS} ./src/startup.s
 
@@ -115,17 +123,22 @@ generic_timer.o: ./src/generic_timer.s
 gicv3_cpuif.o: ./src/gicv3_cpuif.S
 	$(AS) ${ASFLAGS} ./src/gicv3_cpuif.S
 
-image_basic.axf: main_basic.o generic_timer.o system_counter.o sp804_timer.o startup.o gicv3_basic.o gicv3_cpuif.o el3_vectors.o scatter.txt
-	$(LD) --scatter=scatter.txt main_basic.o generic_timer.o system_counter.o sp804_timer.o startup.o gicv3_basic.o gicv3_cpuif.o el3_vectors.o -o image_basic.axf --entry=start64
+image_basic.axf: LDSCRIPT = linker.ld
+image_basic.axf: main_basic.o generic_timer.o system_counter.o sp804_timer.o runtime.o startup.o gicv3_basic.o gicv3_cpuif.o el3_vectors.o linker.ld
+	$(LD) $(LDFLAGS) -Wl,-T,$(LDSCRIPT) -o $@ $(filter %.o,$^)
 
-image_gicv31.axf: main_gicv31.o startup.o gicv3_basic.o gicv3_cpuif.o el3_vectors.o scatter.txt
-	$(LD) --scatter=scatter.txt main_gicv31.o startup.o gicv3_basic.o gicv3_cpuif.o el3_vectors.o -o image_gicv31.axf --entry=start64
+image_gicv31.axf: LDSCRIPT = linker.ld
+image_gicv31.axf: main_gicv31.o runtime.o startup.o gicv3_basic.o gicv3_cpuif.o el3_vectors.o linker.ld
+	$(LD) $(LDFLAGS) -Wl,-T,$(LDSCRIPT) -o $@ $(filter %.o,$^)
 
-image_lpi.axf: main_lpi.o generic_timer.o system_counter.o startup.o gicv3_basic.o gicv3_lpis.o gicv3_cpuif.o el3_vectors.o scatter.txt
-	$(LD) --scatter=scatter.txt main_lpi.o  generic_timer.o system_counter.o               startup.o gicv3_basic.o gicv3_lpis.o gicv3_cpuif.o el3_vectors.o -o image_lpi.axf --entry=start64
+image_lpi.axf: LDSCRIPT = linker.ld
+image_lpi.axf: main_lpi.o generic_timer.o system_counter.o runtime.o startup.o gicv3_basic.o gicv3_lpis.o gicv3_cpuif.o el3_vectors.o linker.ld
+	$(LD) $(LDFLAGS) -Wl,-T,$(LDSCRIPT) -o $@ $(filter %.o,$^)
 
-image_vlpi.axf: main_vlpi.o generic_timer.o system_counter.o startup_virt.o secondary_virt.o gicv3_basic.o gicv4_virt.o gicv3_lpis.o gicv3_cpuif.o el3_vectors.o scatter.txt
-	$(LD) --scatter=scatter_virt.txt main_vlpi.o generic_timer.o system_counter.o startup_virt.o secondary_virt.o gicv3_basic.o gicv3_lpis.o gicv4_virt.o gicv3_cpuif.o el3_vectors.o -o image_vlpi.axf --entry=start64
+image_vlpi.axf: LDSCRIPT = linker_virt.ld
+image_vlpi.axf: main_vlpi.o generic_timer.o system_counter.o runtime.o startup_virt.o secondary_virt.o gicv3_basic.o gicv4_virt.o gicv3_lpis.o gicv3_cpuif.o el3_vectors.o linker_virt.ld
+	$(LD) $(LDFLAGS) -Wl,-T,$(LDSCRIPT) -o $@ $(filter %.o,$^)
 
-image_vsgi.axf: main_vsgi.o generic_timer.o system_counter.o startup_virt.o secondary_virt.o gicv3_basic.o gicv4_virt.o gicv3_lpis.o gicv3_cpuif.o el3_vectors.o scatter.txt
-	$(LD) --scatter=scatter_virt.txt main_vsgi.o generic_timer.o system_counter.o startup_virt.o secondary_virt.o gicv3_basic.o gicv3_lpis.o gicv4_virt.o gicv3_cpuif.o el3_vectors.o -o image_vsgi.axf --entry=start64
+image_vsgi.axf: LDSCRIPT = linker_virt.ld
+image_vsgi.axf: main_vsgi.o generic_timer.o system_counter.o runtime.o startup_virt.o secondary_virt.o gicv3_basic.o gicv4_virt.o gicv3_lpis.o gicv3_cpuif.o el3_vectors.o linker_virt.ld
+	$(LD) $(LDFLAGS) -Wl,-T,$(LDSCRIPT) -o $@ $(filter %.o,$^)

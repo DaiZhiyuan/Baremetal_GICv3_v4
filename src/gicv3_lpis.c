@@ -21,7 +21,7 @@
 // intrinsic.  Re-creating manually.
 static __inline void __dsb(void)
 {
-  asm("dsb sy");
+  __asm__ volatile("dsb sy" ::: "memory");
 }
 
 // ------------------------------------------------------------

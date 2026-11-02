@@ -45,7 +45,7 @@ struct sp804_timer
 
 };
 
-// Instance of the dual timer, will be placed using the scatter file
+// Instance of the dual timer
 struct sp804_timer* dual_timer;
 
 

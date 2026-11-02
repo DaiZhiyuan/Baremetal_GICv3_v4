@@ -17,7 +17,7 @@
 // ------------------------------------------------------------
 
   .global start64
-  .type start64, @function
+  .type start64, %function
 start64:
 
   // Clear registers
@@ -135,17 +135,35 @@ primary:
   MSR      DAIFClr, 0x3
 
 
-  // Branch to scatter loading and C library init code
-  // -------------------------------------------------
-  .global  __main
-  B        __main
+  // Initialise C runtime
+  // --------------------
+  LDR      x0, =__stack_top
+  MOV      sp, x0
+
+  LDR      x0, =__bss_start__
+  LDR      x1, =__bss_end__
+  MOV      x2, #0
+clear_bss:
+  CMP      x0, x1
+  B.HS     clear_bss_done
+  STR      x2, [x0], #8
+  B        clear_bss
+
+clear_bss_done:
+  BL       gnu_runtime_init
+  BL       main
+  BL       exit
+
+hang:
+  B        hang
 
 
 // ------------------------------------------------------------
 // Helper functions
 // ------------------------------------------------------------
 
-  .type getAffinity, "function"
+  .align 2
+  .type getAffinity, %function
   .cfi_startproc
   .global getAffinity
 getAffinity:

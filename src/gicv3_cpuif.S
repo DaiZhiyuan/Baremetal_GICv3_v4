@@ -19,7 +19,7 @@
 
   .global setICC_SRE_EL1
   // void setICC_SRE_EL1(unsigned int value)
-  .type setICC_SRE_EL1, @function
+  .type setICC_SRE_EL1, %function
 setICC_SRE_EL1:
   MSR   ICC_SRE_EL1, x0
   ISB
@@ -31,7 +31,7 @@ setICC_SRE_EL1:
 
   .global getICC_SRE_EL1
   // unsigned int getICC_SRE_EL1(void)
-  .type getICC_SRE_EL1, @function
+  .type getICC_SRE_EL1, %function
 getICC_SRE_EL1:
   MRS   x0, ICC_SRE_EL1
   RET
@@ -42,7 +42,7 @@ getICC_SRE_EL1:
 
   .global setICC_SRE_EL2
   // void setICC_SRE_EL2(unsigned int value)
-  .type setICC_SRE_EL2, @function
+  .type setICC_SRE_EL2, %function
 setICC_SRE_EL2:
   MSR   ICC_SRE_EL2, x0
   ISB
@@ -54,7 +54,7 @@ setICC_SRE_EL2:
 
   .global getICC_SRE_EL2
   // unsigned int getICC_SRE_EL2(void)
-  .type getICC_SRE_EL2, @function
+  .type getICC_SRE_EL2, %function
 getICC_SRE_EL2:
   MRS   x0, ICC_SRE_EL2
   RET
@@ -65,7 +65,7 @@ getICC_SRE_EL2:
 
   .global setICC_SRE_EL3
   // void setICC_SRE_EL3(unsigned int value)
-  .type setICC_SRE_EL3, @function
+  .type setICC_SRE_EL3, %function
 setICC_SRE_EL3:
   MSR   ICC_SRE_EL3, x0
   ISB
@@ -77,7 +77,7 @@ setICC_SRE_EL3:
 
   .global getICC_SRE_EL3
   // unsigned int getICC_SRE_EL3(void)
-  .type getICC_SRE_EL3, @function
+  .type getICC_SRE_EL3, %function
 getICC_SRE_EL3:
   MRS   x0, ICC_SRE_EL3
   RET
@@ -88,7 +88,7 @@ getICC_SRE_EL3:
 
   .global enableGroup0Ints
   // void enableGroup0Ints(void)
-  .type enableGroup0Ints, @function
+  .type enableGroup0Ints, %function
 enableGroup0Ints:
   MOV   w0, #1
   MSR   ICC_IGRPEN0_EL1, x0
@@ -101,7 +101,7 @@ enableGroup0Ints:
 
   .global disableGroup0Ints
   // void disableGroup0Ints(void)
-  .type disableGroup0Ints, @function
+  .type disableGroup0Ints, %function
 disableGroup0Ints:
 
   MOV   w0, #0
@@ -115,7 +115,7 @@ disableGroup0Ints:
 
   .global enableGroup1Ints
   // void enableGroup1Ints((void)//
-  .type enableGroup1Ints, @function
+  .type enableGroup1Ints, %function
 enableGroup1Ints:
   MRS   x0, ICC_IGRPEN1_EL1
   ORR   w0, w0, #1
@@ -128,7 +128,7 @@ enableGroup1Ints:
 
   .global disableGroup1Ints
   // void disableGroup1Ints(void)//
-  .type disableGroup1Ints, @function
+  .type disableGroup1Ints, %function
 disableGroup1Ints:
   MOV   w1, #1
   MRS   x0, ICC_IGRPEN1_EL1
@@ -142,7 +142,7 @@ disableGroup1Ints:
 
   .global enableNSGroup1Ints
   // void enableNSGroup1Ints(void)
-  .type enableNSGroup1Ints, @function
+  .type enableNSGroup1Ints, %function
 enableNSGroup1Ints:
   MRS   x0, ICC_IGRPEN1_EL3
   ORR   w0, w0, #1
@@ -156,7 +156,7 @@ enableNSGroup1Ints:
 
   .global disableNSGroup1Ints
   // void disableNSGroup1Ints(void)
-  .type disableNSGroup1Ints, @function
+  .type disableNSGroup1Ints, %function
 disableNSGroup1Ints:
   MOV   w1, #0x1
   MRS   x0, ICC_IGRPEN1_EL3
@@ -171,7 +171,7 @@ disableNSGroup1Ints:
 
   .global getICC_CTLR_EL3
   // unsigned int getICC_CTLR_EL3(void)//
-  .type getICC_CTLR_EL3, @function
+  .type getICC_CTLR_EL3, %function
 getICC_CTLR_EL3:
   MRS   x0, ICC_CTLR_EL3
   RET
@@ -180,7 +180,7 @@ getICC_CTLR_EL3:
 // ------------------------------------------------------------
   .global setICC_CTLR_EL3
   // void setICC_CTLR_EL3(unsigned int value)
-  .type setICC_CTLR_EL3, @function
+  .type setICC_CTLR_EL3, %function
 setICC_CTLR_EL3:
   MSR   ICC_CTLR_EL3, x0
   ISB
@@ -192,7 +192,7 @@ setICC_CTLR_EL3:
 
   .global getICC_CTLR_EL1
   // unsigned int getICC_CTLR_EL1(void)//
-  .type getICC_CTLR_EL1, @function
+  .type getICC_CTLR_EL1, %function
 getICC_CTLR_EL1:
   MRS   x0, ICC_CTLR_EL1
   RET
@@ -202,7 +202,7 @@ getICC_CTLR_EL1:
 
   .global setICC_CTLR_EL1
   // void setICC_CTLR_EL1(unsigned int value)
-  .type setICC_CTLR_EL1, @function
+  .type setICC_CTLR_EL1, %function
 setICC_CTLR_EL1:
   MSR   ICC_CTLR_EL1, x0
   ISB
@@ -214,7 +214,7 @@ setICC_CTLR_EL1:
 
   .global readIARGrp0
   // unsigned int readIARGrp0(void)//
-  .type readIARGrp0, @function
+  .type readIARGrp0, %function
 readIARGrp0:
   MRS   x0, ICC_IAR0_EL1
   RET
@@ -224,7 +224,7 @@ readIARGrp0:
 
   .global writeEOIGrp0
   // void writeEOIGrp0(unsigned int ID)//
-  .type writeEOIGrp0, @function
+  .type writeEOIGrp0, %function
 writeEOIGrp0:
   MSR   ICC_EOIR0_EL1, x0
   ISB
@@ -235,7 +235,7 @@ writeEOIGrp0:
 
   .global writeDIR
   // void writeDIR(unsigned int ID)//
-  .type writeDIR, @function
+  .type writeDIR, %function
 writeDIR:
   MSR   ICC_DIR_EL1, x0
   ISB
@@ -246,7 +246,7 @@ writeDIR:
 
   .global readIARGrp1
   // unsigned int readIARGrp1(void)//
-  .type readIARGrp1, @function
+  .type readIARGrp1, %function
 readIARGrp1:
   MRS   x0, ICC_IAR1_EL1
   RET
@@ -256,7 +256,7 @@ readIARGrp1:
 
   .global writeEOIGrp1
   // void writeEOIGrp1(unsigned int ID)//
-  .type writeEOIGrp1, @function
+  .type writeEOIGrp1, %function
 writeEOIGrp1:
   MSR   ICC_EOIR1_EL1, x0
   DSB   SY
@@ -267,7 +267,7 @@ writeEOIGrp1:
 
   .global setPriorityMask
   // void setPriorityMask(unsigned int ID)//
-  .type setPriorityMask, @function
+  .type setPriorityMask, %function
 setPriorityMask:
   MSR   ICC_PMR_EL1, x0
   RET
@@ -277,7 +277,7 @@ setPriorityMask:
 
   .global getBPR0
   // unsigned int getBPR0(void)//
-  .type getBPR0, @function
+  .type getBPR0, %function
 getBPR0:
   MRS   x0, ICC_BPR0_EL1
   RET
@@ -287,7 +287,7 @@ getBPR0:
 
   .global setBPR0
   // void setBPR0(unsigned int INTID)//
-  .type setBPR0, @function
+  .type setBPR0, %function
 setBPR0:
   MSR   ICC_BPR0_EL1, x0
   ISB
@@ -298,7 +298,7 @@ setBPR0:
 
   .global getBPR1
   // unsigned int getBPR1(void)//
-  .type getBPR1, @function
+  .type getBPR1, %function
 getBPR1:
   MRS   x0, ICC_BPR1_EL1
   RET
@@ -308,7 +308,7 @@ getBPR1:
 
   .global setBPR1
   // void setBPR1(unsigned int ID)//
-  .type setBPR1, @function
+  .type setBPR1, %function
 setBPR1:
   MSR   ICC_BPR1_EL1, x0
   ISB
@@ -319,7 +319,7 @@ setBPR1:
 
   .global getRunningPriority
   // unsigned int getRunningPriority(void)//
-  .type getRunningPriority, @function
+  .type getRunningPriority, %function
 getRunningPriority:
   MRS   x0, ICC_RPR_EL1
   RET
@@ -331,7 +331,7 @@ getRunningPriority:
 
   .global sendGroup0SGI
   // void sendGroup0SGI(unsigned int ID, unsigned int mode, unsigned target_list)//
-  .type sendGroup0SGI, @function
+  .type sendGroup0SGI, %function
 sendGroup0SGI:
   ORR   x0, x0, x1
   ORR   x0, x0, x2
@@ -343,7 +343,7 @@ sendGroup0SGI:
 
   .global sendGroup1SGI
   // void sendGroup1SGI(unsigned int ID, unsigned int mode, unsigned target_list)//
-  .type sendGroup1SGI, @function
+  .type sendGroup1SGI, %function
 sendGroup1SGI:
   ORR   x0, x0, x1
   ORR   x0, x0, x2
@@ -355,7 +355,7 @@ sendGroup1SGI:
 
   .global sendOtherGroup1SGI
   // void sendOtherGroup1SGI(unsigned int ID, unsigned int mode, unsigned target_list)//
-  .type sendOtherGroup1SGI, @function
+  .type sendOtherGroup1SGI, %function
 sendOtherGroup1SGI:
   ORR   x0, x0, x1
   ORR   x0, x0, x2
