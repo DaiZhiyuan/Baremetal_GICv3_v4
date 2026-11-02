@@ -125,8 +125,9 @@ For GICv4.1:
     - Run "make GIC=GICV4"       to build PPI, SPI, and physical LPI examples.
     - Run "make GIC=GICV4 gicv4" to build vLPI and vSGI examples.
 
-Run "make clean" when switching between GIC versions or DEBUG settings, because the
-object files are shared between all images.
+Object files are kept under build/<configuration>, so switching between GIC versions
+or DEBUG settings does not mix incompatible objects. Run "make clean" to remove all
+build outputs.
 
 Optionally, adding "DEBUG=TRUE" results in additional logging messages being printed.
 
