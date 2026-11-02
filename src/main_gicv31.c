@@ -95,7 +95,7 @@ int main(void)
   
   printf("Main(): Test end\n");
 
-  return 1;
+  return 0;
 }
 
 // --------------------------------------------------------

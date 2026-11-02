@@ -509,7 +509,7 @@ uint32_t setIntType(uint32_t ID, uint32_t rd, uint32_t type)
     ID   = ID & 0xF;              // ... and which field within the register
     ID   = ID * 2;                // Convert from which field to a bit offset (2-bits per field)
 
-    conf = conf << ID;            // Move configuration value into correct bit position
+    conf = type << ID;            // Move configuration value into correct bit position
   
     tmp = gic_dist->GICD_ICFGR[bank];     // Read current value
     tmp = tmp & ~(0x3 << ID);             // Clear the bits for the specified field
@@ -531,7 +531,7 @@ uint32_t setIntType(uint32_t ID, uint32_t rd, uint32_t type)
     ID   = ID & 0xF;              // ... and which field within the register
     ID   = ID * 2;                // Convert from which field to a bit offset (2-bits per field)
 
-    conf = conf << ID;            // Move configuration value into correct bit position
+    conf = type << ID;            // Move configuration value into correct bit position
   
     tmp = gic_dist->GICD_ICFGRE[bank];    // Read current value
     tmp = tmp & ~(0x3 << ID);             // Clear the bits for the specified field
