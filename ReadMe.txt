@@ -64,13 +64,6 @@ File list
   |   |-> run_gicv3.sh       Helper scripts for runing FVP
   |   |-> run_gicv4.sh       Helper scripts for runing FVP
   |
-  |-> pre-build
-  |   |-> image_basic.axf    Pre-build executable image for GICv3.0 SPI & PPI.
-  |   |-> image_gicv31.axf   Pre-build executable image for GICv3.1 Extended PPI and SPI.
-  |   |-> image_lpi.axf      Pre-build executbale image for GICv3.x physical LPI.
-  |   |-> image_vlpi.axf     Pre-build executbale image for GICv4.1 virtual LPI.
-  |   |-> image_vsgi.axf     Pre-build executbale image for GICv4.1 virtual SGI.
-  |
   |-> Makefile
   |-> ReadMe.txt             This file
   |-> linker.ld              GNU linker script for GICv3 examples
@@ -103,8 +96,6 @@ This example shows the setup and use of GICv4.1 virtual LPIs.
 
 image_vsgi
 This example shows the setup and use of GICv4.1 virtual SGIs.
-
-
 
 Building the example from the command line
 ==========================================
